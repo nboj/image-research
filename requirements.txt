@@ -1,0 +1,7 @@
+pynvim
+#jupyter_client
+ipykernel
+
+cairosvg
+pillow
+pyperclip
