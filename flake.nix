@@ -40,7 +40,6 @@
             rustc
             cargo
             pkg-config
-  python313Packages.huggingface-hub
   git
   git-lfs
           ];
