@@ -1,7 +1,7 @@
-pynvim
-#jupyter_client
+opencv-python 
+pycocotools 
+matplotlib 
+onnxruntime 
+onnx 
 ipykernel
-
-cairosvg
-pillow
-pyperclip
+transformers

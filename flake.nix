@@ -6,9 +6,12 @@
     url = "github:numtide/flake-utils";
     inputs.systems.follows = "systems";
   };
+  inputs.hf-nix.url = "github:huggingface/hf-nix";
+  #inputs.nixpkgs.follows = "hf-nix/nixpkgs";
 
   outputs = {
     nixpkgs,
+    hf-nix,
     flake-utils,
     ...
   }:
@@ -34,9 +37,29 @@
             python313Packages.jupytext
             python313Packages.opencv-python
             python313Packages.google
+            rustc
+            cargo
+            pkg-config
+  python313Packages.huggingface-hub
+  git
+  git-lfs
           ];
           env = {
+            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+              pkgs.stdenv.cc.cc
+              pkgs.zstd
+              # Add any missing library needed
+              # You can use the nix-index package to locate them, e.g. nix-locate -w --top-level --at-root /lib/libudev.so.1
+            ];
+            AM_I_DOCKER = false;
+            BUILD_WITH_CUDA = true;
+            PYO3_USE_ABI3_FORWARD_COMPATIBILITY = 1;
+            TOKENIZERS_USE_RUSTUP = 0;
+            RUSTUP_TOOLCHAIN = "stable";
 
+            HF_HUB_ETAG_TIMEOUT = 120;
+            HF_HUB_DOWNLOAD_TIMEOUT = 600;
+            HF_HUB_DISABLE_TELEMETRY = 1;
           };
         };
       }
