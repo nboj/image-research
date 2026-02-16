@@ -22,31 +22,50 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             bashInteractive
-            python313
-            python313Packages.pip
-            python313Packages.virtualenv
-            python313Packages.pynvim
-            python313Packages.jupyter-client
-            python313Packages.notebook
-            python313Packages.cairosvg
-            python313Packages.pillow
-            python313Packages.ipykernel
-            python313Packages.pyperclip
-            python313Packages.scikit-image
-            python313Packages.nbformat
-            python313Packages.jupytext
-            python313Packages.opencv-python
-            python313Packages.google
+            python312
+            python312Packages.pip
+            python312Packages.virtualenv
+            python312Packages.pynvim
+            python312Packages.jupyter-client
+            python312Packages.cairosvg
+            python312Packages.pillow
+            python312Packages.ipykernel
+            python312Packages.pyperclip
+            python312Packages.scikit-image
+            python312Packages.nbformat
+            python312Packages.jupytext
+            python312Packages.opencv-python
+            python312Packages.google
             rustc
             cargo
             pkg-config
-  git
-  git-lfs
+            git
+            git-lfs
+            pkgs.rocmPackages.rocm-comgr
+            pkgs.rocmPackages.rpp
+            pkgs.rocmPackages.clr
+            pkgs.rocmPackages.hipcc
+            pkgs.rocmPackages.rocm-smi
+              pkgs.rocmPackages.rocprofiler
+pkgs.rocmPackages.rocprofiler-register 
+pkgs.rocmPackages.rccl
           ];
           env = {
             LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
               pkgs.stdenv.cc.cc
               pkgs.zstd
+              # ROCm/HIP runtime libs (includes libamdhip64.so.7)
+              pkgs.rocmPackages.rocm-runtime
+              pkgs.rocmPackages.clr
+              pkgs.rocmPackages.rocm-core
+              pkgs.rocmPackages.rocminfo
+              pkgs.rocmPackages.rpp
+              pkgs.rocmPackages.hipcc
+              pkgs.rocmPackages.rocm-smi
+              pkgs.rocmPackages.rocm-comgr
+              pkgs.rocmPackages.rocprofiler
+pkgs.rocmPackages.rocprofiler-register 
+pkgs.rocmPackages.rccl
               # Add any missing library needed
               # You can use the nix-index package to locate them, e.g. nix-locate -w --top-level --at-root /lib/libudev.so.1
             ];
